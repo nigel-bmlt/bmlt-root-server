@@ -1,3 +1,5 @@
 FROM mariadb:latest
 
 ADD sample-bmlt-schema.sql /docker-entrypoint-initdb.d/sample-bmlt-schema.sql
+ADD backupdb.sh /tmp/backupdb.sh
+ADD resetdb.sh /tmp/resetdb.sh

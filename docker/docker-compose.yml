@@ -1,28 +1,36 @@
 version: '3'
+name: bmlt3x
+
+networks:
+  default:
+    name: testnet
+    external: true
 
 services:
-  bmlt:
+  bmlt3x:
     build:
       context: ..
       dockerfile: docker/Dockerfile-debug
       pull: true
     ports:
-      - "8000:8000"
+      - "8001:8001"
     env_file:
       - bmlt.env
     environment:
       APP_DEBUG: "true"
-      DB_HOST: db
+      DB_HOST: db3x
+      BMLT_PORT: 8001
+      MEETING_STATES_ON: ${MEETING_STATES_ON-false}
+      AUTO_GEOCODING_ON: ${AUTO_GEOCODING_ON-false}
     depends_on:
-      - db
+      - db3x
     volumes:
       - ../src:/var/www/html/main_server/
-  db:
+  db3x:
     build:
       context: .
       dockerfile: Dockerfile-db
-    ports:
-      - "3306:3306"
+    tmpfs: /var/lib/mysql
     environment:
       MARIADB_ROOT_PASSWORD: rootserver
       MARIADB_DATABASE: rootserver
